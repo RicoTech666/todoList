@@ -1,45 +1,48 @@
 body {
-  font-family: Arial, Helvetica, sans-serif, serif;
-  background-color: #CBCBCB;
+	font-family: Arial, Helvetica, sans-serif, serif;
+	background-color: #cbcbcb;
 }
 .todolist {
-  width: 30%;
-  border-radius: 5px;
-  background-color: white;
+	width: 30%;
+	border-radius: 5px;
+	background-color: white;
 }
 .todolist-header {
-  padding: 10px 0 20px 20px;
+	padding: 10px 0 20px 20px;
 }
 .todolist-header p {
 	font-style: italic;
 }
-input[type=text] {
-  width: 65%;
-  height: 20px;
-}
-input[type=text]:focus {
-  border: 1px solid rgb(152, 195, 241);
-}
-button[name=add-btn] {
-  height: 26px;
-  width: 50px;
-  border: 0;
-  border-radius: 4px;
-  color: white;
-  background-color: #fc999c;
-}
-button[name=add-btn]:hover {
-  opacity: 0.8;
-}
-button[name=add-btn]:focus {
-  outline: none;
-}
 
+.new-task {
+	width: 65%;
+	height: 20px;
+}
+.new-task:focus {
+	border: 1px solid rgb(152, 195, 241);
+}
+.add-btn {
+	height: 26px;
+	width: 50px;
+	border: 0;
+	border-radius: 4px;
+	color: white;
+	background-color: #fc999c;
+}
+.add-btn:hover {
+	opacity: 0.8;
+}
+.add-btn:focus {
+	outline: none;
+}
 
 .todolist-footer {
-  padding: 20px 0 10px 20px;
+	padding: 20px 0 10px 20px;
 }
 .todolist-footer form {
-  display: flex;
-  justify-content: space-evenly;
+	display: flex;
+	justify-content: space-evenly;
+}
+.footer-btn {
+	color: #fc9ba5;
 }
