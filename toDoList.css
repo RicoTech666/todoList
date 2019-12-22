@@ -1,0 +1,44 @@
+body {
+  font-family: Arial, Helvetica, sans-serif, serif;
+  background-color: #CBCBCB;
+}
+.todolist {
+  width: 30%;
+  border-radius: 5px;
+  background-color: white;
+}
+.todolist-header {
+  padding: 10px 0 20px 20px;
+}
+.todolist-header p {
+	font-style: italic;
+}
+input[type=text] {
+  width: 65%;
+  height: 20px;
+}
+input[type=text]:focus {
+  border: 2px solid #7AB4F1;
+  box-shadow: 0 0 3px;
+}
+.addBtn {
+  height: 26px;
+  width: 50px;
+  border: 0;
+  border-radius: 4px;
+  color: white;
+  background-color: #fc999c;
+}
+.addBtn:hover {
+  opacity: 0.8;
+}
+.addBtn:focus {
+  outline: none;
+}
+
+
+.todolist-footer {
+  display: flex;
+  padding: 20px 0 10px 20px;
+  justify-content: space-evenly;
+}
