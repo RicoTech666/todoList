@@ -14,12 +14,15 @@
     <div class="todolist-header">
       <h2>To Do List</h2>
       <p>Simple Todo List with adding abd filter by diff status.</p>
-      <form action="GET">
-        <input name="new-task" type="text" class="new-task">
-        <button name="add-btn" class="header-btn add-btn">Add</button>
-      </form>
+
+      <input name="new-task" type="text" class="new-task" onkeydown="addNewTask(event)">
+      <button name="add-btn" class="header-btn add-btn" onmousedown="addNewTask(event)">Add</button>
+
     </div>
-    <div class="todolist-body"></div>
+    <div class="todolist-body">
+      <ol class="list-of-todo">
+      </ol>
+    </div>
     <div class="todolist-footer">
       <form action="GET">
         <button name="all-btn" class="footer-btn all-btn">All</button>
@@ -29,5 +32,6 @@
     </div>
   </div>
 </body>
+<script src="./toDoList.js"></script>
 
 </html>

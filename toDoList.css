@@ -44,13 +44,20 @@ body {
 	justify-content: space-between;
 }
 .footer-btn {
-  height: 20px;
-  border: 1px solid white;
-  font-size: 15px;
-  line-height: 15px;
-  color: #fc9ba5;
-  background-color: white;
+	height: 20px;
+	border: 1px solid white;
+	font-size: 15px;
+	line-height: 15px;
+	color: #fc9ba5;
+	background-color: white;
 }
 .footer-btn:hover {
-border: 1px solid rgba(190, 190, 190, 0.5);
+	border: 1px solid rgba(190, 190, 190, 0.5);
+}
+.list-of-todo li {
+  width:80%;
+  line-height: 25px;
+}
+.list-of-todo li:nth-child(even) {
+	background: #f3ebeb;
 }
