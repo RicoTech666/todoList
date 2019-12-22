@@ -3,19 +3,19 @@ body {
 	background-color: #cbcbcb;
 }
 .todolist {
-	width: 30%;
+	width: 28%;
 	border-radius: 5px;
 	background-color: white;
 }
 .todolist-header {
-	padding: 10px 0 20px 20px;
+	padding: 10px 0 20px 30px;
 }
 .todolist-header p {
 	font-style: italic;
 }
 
 .new-task {
-	width: 65%;
+	width: 70%;
 	height: 20px;
 }
 .new-task:focus {
@@ -37,12 +37,20 @@ body {
 }
 
 .todolist-footer {
-	padding: 20px 0 10px 20px;
+	padding: 20px 160px 10px 150px;
 }
 .todolist-footer form {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
 }
 .footer-btn {
-	color: #fc9ba5;
+  height: 20px;
+  border: 1px solid white;
+  font-size: 15px;
+  line-height: 15px;
+  color: #fc9ba5;
+  background-color: white;
+}
+.footer-btn:hover {
+border: 1px solid rgba(190, 190, 190, 0.5);
 }
