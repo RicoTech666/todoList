@@ -24,11 +24,11 @@
       </ol>
     </div>
     <div class="todolist-footer">
-      <form action="GET">
         <button name="all-btn" class="footer-btn all-btn">All</button>
-        <button name="active-btn" class="footer-btn active-btn">Active</button>
-        <button name="complete-btn" class="footer-btn complete-btn">Complete</button>
-      </form>
+        <button name="active-btn" class="footer-btn active-btn"
+          onmousedown="getAddPermission(event)">Active</button>
+        <button name="complete-btn" class="footer-btn complete-btn"
+          onmousedown="getAddPermission(event)">Complete</button>
     </div>
   </div>
 </body>
