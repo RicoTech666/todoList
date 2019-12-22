@@ -18,10 +18,9 @@ input[type=text] {
   height: 20px;
 }
 input[type=text]:focus {
-  border: 2px solid #7AB4F1;
-  box-shadow: 0 0 3px;
+  border: 1px solid rgb(152, 195, 241);
 }
-.addBtn {
+button[name=add-btn] {
   height: 26px;
   width: 50px;
   border: 0;
@@ -29,16 +28,18 @@ input[type=text]:focus {
   color: white;
   background-color: #fc999c;
 }
-.addBtn:hover {
+button[name=add-btn]:hover {
   opacity: 0.8;
 }
-.addBtn:focus {
+button[name=add-btn]:focus {
   outline: none;
 }
 
 
 .todolist-footer {
-  display: flex;
   padding: 20px 0 10px 20px;
+}
+.todolist-footer form {
+  display: flex;
   justify-content: space-evenly;
 }

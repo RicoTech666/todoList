@@ -16,14 +16,16 @@
       <p>Simple Todo List with adding abd filter by diff status.</p>
       <form action="GET">
         <input type="text" name="new-task">
-        <button class="addBtn">Add</button>
+        <button name="add-btn" class="header-btn">Add</button>
       </form>
     </div>
     <div class="todolist-body"></div>
     <div class="todolist-footer">
-      <button class="allBtn">All</button>
-      <button class="activeBtn">Active</button>
-      <button class="completeBtn">Complete</button>
+      <form action="GET">
+        <button name="all-btn" class="footer-btn">All</button>
+        <button name="active-btn" class="footer-btn">Active</button>
+        <button name="complete-btn" class="footer-btn">Complete</button>
+      </form>
     </div>
   </div>
 </body>
