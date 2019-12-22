@@ -55,8 +55,8 @@ body {
 	border: 1px solid rgba(190, 190, 190, 0.5);
 }
 .list-of-todo li {
-  width:80%;
-  line-height: 25px;
+	width: 80%;
+	line-height: 25px;
 }
 .list-of-todo li:nth-child(even) {
 	background: #f3ebeb;

@@ -19,14 +19,14 @@ function checkIsEmpty(inputBox) {
 }
 
 function putNewTaskIntoList() {
-  var newTaskInputBox = document.getElementsByClassName("new-task")[0];
+	var newTaskInputBox = document.getElementsByClassName("new-task")[0];
 	var listOfTodo = document.getElementsByClassName("list-of-todo")[0];
 	var targetListLine = document.createElement("li");
-	targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">${newTaskInputBox.value}`;
+	targetListLine.innerHTML = `<input type="checkbox" class="task-status-box"> ${newTaskInputBox.value}`;
 	listOfTodo.appendChild(targetListLine);
 }
 
 function clearInputBox() {
-  var newTaskInputBox = document.getElementsByClassName("new-task")[0];
-  newTaskInputBox.innerHTML = "";
+	var newTaskInputBox = document.getElementsByClassName("new-task")[0];
+	newTaskInputBox.innerHTML = "";
 }
