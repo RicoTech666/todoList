@@ -67,4 +67,25 @@ function getDisplayNewTaskPermission() {
 	}
 }
 
-
+_$("todolist-body")[0].addEventListener("click", finishTask, false);
+function finishTask(event) {
+	var statusBox = event.target;
+	var taskContent = _$("task-content", statusBox.parentNode)[0];
+	if ("task-status-box" === statusBox.className) {
+		var isFinished = statusBox.checked;
+		if (isFinished) {
+			statusBox.parentNode.style.color = "gray";
+			statusBox.parentNode.style.textDecoration = "line-through";
+		} else if (!isFinished) {
+			statusBox.parentNode.style.color = "black";
+			statusBox.parentNode.style.textDecoration = "none";
+		}
+	}
+	toggleTaskStorageStatus(taskContent.innerHTML);
+}
+function toggleTaskStorageStatus(taskContentLiteral) {
+	var taskStatus = localStorage.getItem(taskContentLiteral);
+	"notDone" === taskStatus
+		? (localStorage[taskContentLiteral] = "Done")
+		: (localStorage[taskContentLiteral] = "notDone");
+}
