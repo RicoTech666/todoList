@@ -116,3 +116,18 @@ function showAllTasks() {
 	}
 	setListNumber();
 }
+function showActiveTasks() {
+	var listOfTodo = _$("list-of-todo")[0];
+
+	for (let i = 0; i < localStorage.length; i++) {
+		var taskContentLiteral = localStorage.key(i);
+		var taskStatus = localStorage.getItem(taskContentLiteral);
+		var targetListLine = document.createElement("li");
+		if ("notDone" === taskStatus) {
+			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
+      <span class="task-content">${taskContentLiteral}</span>`;
+			listOfTodo.appendChild(targetListLine);
+		}
+	}
+	setListNumber();
+}
