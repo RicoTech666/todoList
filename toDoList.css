@@ -57,10 +57,14 @@ body {
 	outline: none;
 }
 
+.list-of-todo {
+	list-style: none;
+}
 .list-of-todo li {
 	width: 80%;
 	line-height: 25px;
 }
+
 .list-of-todo li:nth-child(even) {
 	background: #f3ebeb;
 }
