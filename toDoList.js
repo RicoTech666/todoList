@@ -5,7 +5,7 @@ function _$(className, parentNode) {
 		return document.getElementsByClassName(className);
 	}
 }
-//var tasksListObj = new Object();
+var tasksListObj = new Object();
 var todoList = _$("todolist")[0];
 todoList.addEventListener("click", addNewTask, false);
 todoList.addEventListener("keydown", addNewTask, false);
@@ -52,9 +52,9 @@ function checkIsEmpty(inputBox) {
 
 function putNewTaskIntoStorage() {
 	var newTaskInputBox = _$("new-task")[0];
-	//tasksListObj[newTaskInputBox.value] = "notDone";
-	//localStorage.setItem("test",JSON.stringify(tasksListObj));
-	localStorage.setItem(`${newTaskInputBox.value}`, "notDone");
+	tasksListObj[newTaskInputBox.value] = "notDone";
+	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
+	//localStorage.setItem(`${newTaskInputBox.value}`, "notDone");
 }
 function displayNewTask() {
 	var newTaskInputBox = _$("new-task")[0];
@@ -88,6 +88,8 @@ function finishTask(event) {
 		var currentTaskLine = statusBox.parentNode;
 		if (isFinished) {
 			changeStylesToFinished(currentTaskLine);
+		} else if (!isFinished) {
+			changeStylesToUnfinished(currentTaskLine);
 		}
 	}
 	toggleTaskStorageStatus(taskContent.innerHTML);
@@ -101,18 +103,21 @@ function changeStylesToUnfinished(taskLine) {
 	taskLine.style.textDecoration = "none";
 }
 function toggleTaskStorageStatus(taskContentLiteral) {
-	var taskStatus = localStorage.getItem(taskContentLiteral);
+	var tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
+	var taskStatus = tasksListObj[taskContentLiteral];
 	"notDone" === taskStatus
-		? (localStorage[taskContentLiteral] = "Done")
-		: (localStorage[taskContentLiteral] = "notDone");
+		? (tasksListObj[taskContentLiteral] = "Done")
+		: (tasksListObj[taskContentLiteral] = "notDone");
+	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
 }
 
 function showAllTasks() {
-	var listOfTodo = _$("list-of-todo")[0];
+  var listOfTodo = _$("list-of-todo")[0];
+  var tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
 	removeDisplayedTasks();
-	for (let i = 0; i < localStorage.length; i++) {
-		var taskContentLiteral = localStorage.key(i);
-		var taskStatus = localStorage.getItem(taskContentLiteral);
+	for(let key in tasksListObj) {
+		var taskContentLiteral = key;
+		var taskStatus = tasksListObj[key];
 		var targetListLine = document.createElement("li");
 		targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
     <span class="task-content">${taskContentLiteral}</span>`;
@@ -127,11 +132,12 @@ function showAllTasks() {
 	setListNumber();
 }
 function showActiveTasks() {
-	var listOfTodo = _$("list-of-todo")[0];
+  var listOfTodo = _$("list-of-todo")[0];
+  var tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
 	removeDisplayedTasks();
-	for (let i = 0; i < localStorage.length; i++) {
-		var taskContentLiteral = localStorage.key(i);
-		var taskStatus = localStorage.getItem(taskContentLiteral);
+	for(let key in tasksListObj) {
+		var taskContentLiteral = key;
+		var taskStatus = tasksListObj[key];
 		var targetListLine = document.createElement("li");
 		if ("notDone" === taskStatus) {
 			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
@@ -143,10 +149,11 @@ function showActiveTasks() {
 }
 function showCompletedTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
+  var tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
 	removeDisplayedTasks();
-	for (let i = 0; i < localStorage.length; i++) {
-		var taskContentLiteral = localStorage.key(i);
-		var taskStatus = localStorage.getItem(taskContentLiteral);
+	for(let key in tasksListObj) {
+		var taskContentLiteral = key;
+		var taskStatus = tasksListObj[key];
 		var targetListLine = document.createElement("li");
 		if ("Done" === taskStatus) {
 			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
