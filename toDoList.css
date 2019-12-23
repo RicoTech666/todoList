@@ -64,7 +64,6 @@ body {
 	width: 80%;
 	line-height: 25px;
 }
-
 .list-of-todo li:nth-child(even) {
 	background: #f3ebeb;
 }
