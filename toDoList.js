@@ -52,8 +52,7 @@ function setListNumber() {
 }
 
 function clearInputBox() {
-	var newTaskInputBox = _$("new-task")[0];
-	newTaskInputBox.innerHTML = "";
+	_$("new-task")[0].value = "";
 }
 
 _$("active-btn")[0].addEventListener("click", getDisplayNewTaskPermission, false);
