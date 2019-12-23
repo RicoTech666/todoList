@@ -88,3 +88,16 @@ function toggleTaskStorageStatus(taskContentLiteral) {
 		? (localStorage[taskContentLiteral] = "Done")
 		: (localStorage[taskContentLiteral] = "notDone");
 }
+
+function showAllTasks() {
+	var listOfTodo = _$("list-of-todo")[0];
+
+	for (let i = 0; i < localStorage.length; i++) {
+		var taskContent = localStorage.key(i);
+		var targetListLine = document.createElement("li");
+		targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
+    <span class="task-content">${taskContent}</span>`;
+    listOfTodo.appendChild(targetListLine);
+  }
+  setListNumber();
+}
