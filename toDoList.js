@@ -5,7 +5,27 @@ function _$(className, parentNode) {
 		return document.getElementsByClassName(className);
 	}
 }
+//var tasksListObj = new Object();
+var todoList = _$("todolist")[0];
+todoList.addEventListener("click", addNewTask, false);
+todoList.addEventListener("keydown", addNewTask, false);
 
+var isAllowedToDisplay = true;
+var todolistFooter = _$("todolist-footer")[0];
+todolistFooter.addEventListener("click", checkIsAllowedToDisplay, false);
+function checkIsAllowedToDisplay() {
+	switch (event.target) {
+		case _$("complete-btn")[0]:
+			isAllowedToDisplay = false;
+			break;
+		case _$("add-btn")[0]:
+			isAllowedToDisplay = true;
+			break;
+		case _$("active-btn")[0]:
+			isAllowedToDisplay = true;
+			break;
+	}
+}
 function addNewTask(event) {
 	var addBtn = _$("add-btn")[0];
 	var newTaskInputBox = _$("new-task")[0];
@@ -13,7 +33,9 @@ function addNewTask(event) {
 	if (13 === event.keyCode || event.target === addBtn) {
 		if (!isEmpty) {
 			putNewTaskIntoStorage();
-			displayNewTask();
+			if (isAllowedToDisplay) {
+				displayNewTask();
+			}
 			setListNumber();
 			clearInputBox();
 		}
@@ -27,9 +49,12 @@ function checkIsEmpty(inputBox) {
 		return false;
 	}
 }
+
 function putNewTaskIntoStorage() {
 	var newTaskInputBox = _$("new-task")[0];
-	localStorage.setItem(newTaskInputBox.value, "notDone");
+	//tasksListObj[newTaskInputBox.value] = "notDone";
+	//localStorage.setItem("test",JSON.stringify(tasksListObj));
+	localStorage.setItem(`${newTaskInputBox.value}`, "notDone");
 }
 function displayNewTask() {
 	var newTaskInputBox = _$("new-task")[0];
@@ -50,20 +75,8 @@ function setListNumber() {
 		}
 	});
 }
-
 function clearInputBox() {
 	_$("new-task")[0].value = "";
-}
-
-_$("active-btn")[0].addEventListener("click", getDisplayNewTaskPermission, false);
-_$("complete-btn")[0].addEventListener("click", getDisplayNewTaskPermission, false);
-
-function getDisplayNewTaskPermission() {
-	if (window.event.target === _$("active-btn")[0]) {
-		return true;
-	} else if (window.event.target === _$("complete-btn")[0]) {
-		return false;
-	}
 }
 
 _$("todolist-body")[0].addEventListener("click", finishTask, false);
@@ -75,8 +88,6 @@ function finishTask(event) {
 		var currentTaskLine = statusBox.parentNode;
 		if (isFinished) {
 			changeStylesToFinished(currentTaskLine);
-		} else if (!isFinished) {
-			changeStylesToUnfinished(currentTaskLine);
 		}
 	}
 	toggleTaskStorageStatus(taskContent.innerHTML);
@@ -140,7 +151,7 @@ function showCompletedTasks() {
 		if ("Done" === taskStatus) {
 			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
       <span class="task-content">${taskContentLiteral}</span>`;
-      changeStylesToFinished(targetListLine);
+			changeStylesToFinished(targetListLine);
 			listOfTodo.appendChild(targetListLine);
 		}
 	}

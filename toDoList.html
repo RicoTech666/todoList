@@ -14,17 +14,17 @@
     <div class="todolist-header">
       <h2>To Do List</h2>
       <p>Simple Todo List with adding abd filter by diff status.</p>
-      <input name="new-task" type="text" class="new-task" onkeydown="addNewTask(event)">
-      <button name="add-btn" class="header-btn add-btn" onmousedown="addNewTask(event)">Add</button>
+      <input name="new-task" type="text" class="new-task">
+      <button name="add-btn" class="header-btn add-btn"">Add</button>
     </div>
     <div class="todolist-body">
       <ul class="list-of-todo">
       </ul>
     </div>
     <div class="todolist-footer">
-      <button name="all-btn" class="footer-btn all-btn" onmousedown="showAllTasks()">All</button>
-      <button name="active-btn" class="footer-btn active-btn" onmousedown="showActiveTasks()">Active</button>
-      <button name="complete-btn" class="footer-btn complete-btn" onmousedown="showCompletedTasks()">Complete</button>
+      <button name="all-btn" class="footer-btn all-btn" onclick="showAllTasks()">All</button>
+      <button name="active-btn" class="footer-btn active-btn" onclick="showActiveTasks()">Active</button>
+      <button name="complete-btn" class="footer-btn complete-btn" onclick="showCompletedTasks()">Complete</button>
     </div>
   </div>
 </body>
