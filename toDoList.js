@@ -72,15 +72,22 @@ function finishTask(event) {
 	var taskContent = _$("task-content", statusBox.parentNode)[0];
 	if ("task-status-box" === statusBox.className) {
 		var isFinished = statusBox.checked;
+		var currentTaskLine = statusBox.parentNode;
 		if (isFinished) {
-			statusBox.parentNode.style.color = "gray";
-			statusBox.parentNode.style.textDecoration = "line-through";
+			changeStylesToFinished(currentTaskLine);
 		} else if (!isFinished) {
-			statusBox.parentNode.style.color = "black";
-			statusBox.parentNode.style.textDecoration = "none";
+			changeStylesToUnfinished(currentTaskLine);
 		}
 	}
 	toggleTaskStorageStatus(taskContent.innerHTML);
+}
+function changeStylesToFinished(taskLine) {
+	taskLine.style.color = "gray";
+	taskLine.style.textDecoration = "line-through";
+}
+function changeStylesToUnfinished(taskLine) {
+	taskLine.style.color = "black";
+	taskLine.style.textDecoration = "none";
 }
 function toggleTaskStorageStatus(taskContentLiteral) {
 	var taskStatus = localStorage.getItem(taskContentLiteral);
@@ -93,11 +100,19 @@ function showAllTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
 
 	for (let i = 0; i < localStorage.length; i++) {
-		var taskContent = localStorage.key(i);
+		var taskContentLiteral = localStorage.key(i);
+		var taskStatus = localStorage.getItem(taskContentLiteral);
 		var targetListLine = document.createElement("li");
+
 		targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
-    <span class="task-content">${taskContent}</span>`;
-    listOfTodo.appendChild(targetListLine);
-  }
-  setListNumber();
+    <span class="task-content">${taskContentLiteral}</span>`;
+		if ("Done" === taskStatus) {
+			targetListLine.firstChild.checked = true;
+			changeStylesToFinished(targetListLine);
+		} else {
+			changeStylesToUnfinished(targetListLine);
+		}
+		listOfTodo.appendChild(targetListLine);
+	}
+	setListNumber();
 }
