@@ -98,7 +98,7 @@ function toggleTaskStorageStatus(taskContentLiteral) {
 
 function showAllTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
-
+	removeDisplayedTasks();
 	for (let i = 0; i < localStorage.length; i++) {
 		var taskContentLiteral = localStorage.key(i);
 		var taskStatus = localStorage.getItem(taskContentLiteral);
@@ -118,7 +118,7 @@ function showAllTasks() {
 }
 function showActiveTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
-
+	removeDisplayedTasks();
 	for (let i = 0; i < localStorage.length; i++) {
 		var taskContentLiteral = localStorage.key(i);
 		var taskStatus = localStorage.getItem(taskContentLiteral);
@@ -130,4 +130,11 @@ function showActiveTasks() {
 		}
 	}
 	setListNumber();
+}
+function removeDisplayedTasks() {
+	console.log("hello");
+	var listToBeOperated = _$("list-of-todo")[0];
+	while (listToBeOperated.firstChild) {
+		listToBeOperated.removeChild(listToBeOperated.firstChild);
+	}
 }
