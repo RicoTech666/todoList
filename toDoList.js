@@ -103,7 +103,6 @@ function showAllTasks() {
 		var taskContentLiteral = localStorage.key(i);
 		var taskStatus = localStorage.getItem(taskContentLiteral);
 		var targetListLine = document.createElement("li");
-
 		targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
     <span class="task-content">${taskContentLiteral}</span>`;
 		if ("Done" === taskStatus) {
@@ -131,8 +130,24 @@ function showActiveTasks() {
 	}
 	setListNumber();
 }
+function showCompletedTasks() {
+	var listOfTodo = _$("list-of-todo")[0];
+	removeDisplayedTasks();
+	for (let i = 0; i < localStorage.length; i++) {
+		var taskContentLiteral = localStorage.key(i);
+		var taskStatus = localStorage.getItem(taskContentLiteral);
+		var targetListLine = document.createElement("li");
+		if ("Done" === taskStatus) {
+			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
+      <span class="task-content">${taskContentLiteral}</span>`;
+      changeStylesToFinished(targetListLine);
+			listOfTodo.appendChild(targetListLine);
+		}
+	}
+	setListNumber();
+}
+
 function removeDisplayedTasks() {
-	console.log("hello");
 	var listToBeOperated = _$("list-of-todo")[0];
 	while (listToBeOperated.firstChild) {
 		listToBeOperated.removeChild(listToBeOperated.firstChild);
