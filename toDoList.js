@@ -207,11 +207,16 @@ function addDeleteTaskButton() {
 }
 
 function removeSingleDisplayedTaskFromList(event) {
-	var currentTaskLine = event.target.parentNode;
-	var taskContentLiteral = _$("task-content", currentTaskLine)[0].innerHTML;
-	var currentTaskList = currentTaskLine.parentNode;
-	removeSingleTaskFromStorage(taskContentLiteral);
-	currentTaskList.removeChild(currentTaskLine);
+	var confirmResult = confirm("Are you sure to delete this task?");
+	if (confirmResult) {
+		var currentTaskLine = event.target.parentNode;
+		var taskContentLiteral = _$("task-content", currentTaskLine)[0].innerHTML;
+		var currentTaskList = currentTaskLine.parentNode;
+		removeSingleTaskFromStorage(taskContentLiteral);
+		currentTaskList.removeChild(currentTaskLine);
+	} else {
+		return;
+	}
 }
 
 function removeSingleTaskFromStorage(taskToBeDeleted) {
