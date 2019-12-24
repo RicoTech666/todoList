@@ -67,4 +67,13 @@ body {
 .list-of-todo li:nth-child(even) {
 	background: #f3ebeb;
 }
-
+.list-of-todo i {
+	display: none;
+	float: right;
+}
+.list-of-todo i:hover {
+	opacity: 0.2;
+}
+.list-of-todo li:hover i {
+	display: inline-block;
+} 

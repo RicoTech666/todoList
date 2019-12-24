@@ -44,6 +44,7 @@ function addNewTask() {
 				displayNewTask();
 			}
 			setListNumber();
+			addDeleteTaskButton();
 			clearInputBox();
 		}
 	}
@@ -86,18 +87,20 @@ function clearInputBox() {
 
 _$("todolist-body")[0].addEventListener("click", finishTask, false);
 function finishTask(event) {
-	var statusBox = event.target;
-	var taskContent = _$("task-content", statusBox.parentNode)[0];
-	if ("task-status-box" === statusBox.className) {
+	if (event.target.className === "task-status-box") {
+		var statusBox = event.target;
+		var taskContent = _$("task-content", statusBox.parentNode)[0].innerHTML;
 		var isFinished = statusBox.checked;
 		var currentTaskLine = statusBox.parentNode;
+
 		if (isFinished) {
 			changeStylesToFinished(currentTaskLine);
 		} else if (!isFinished) {
 			changeStylesToUnfinished(currentTaskLine);
 		}
 	}
-	toggleTaskStorageStatus(taskContent.innerHTML);
+
+	toggleTaskStorageStatus(taskContent);
 }
 function changeStylesToFinished(taskLine) {
 	taskLine.style.color = "gray";
@@ -119,7 +122,7 @@ function toggleTaskStorageStatus(taskContentLiteral) {
 function showAllTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
-	removeDisplayedTasks();
+	removeAllDisplayedTasksFromList();
 	for (let key in tasksListObj) {
 		var taskContentLiteral = key;
 		var taskStatus = tasksListObj[key];
@@ -135,11 +138,12 @@ function showAllTasks() {
 		listOfTodo.appendChild(targetListLine);
 	}
 	setListNumber();
+	addDeleteTaskButton();
 }
 function showActiveTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
-	removeDisplayedTasks();
+	removeAllDisplayedTasksFromList();
 	for (let key in tasksListObj) {
 		var taskContentLiteral = key;
 		var taskStatus = tasksListObj[key];
@@ -151,11 +155,12 @@ function showActiveTasks() {
 		}
 	}
 	setListNumber();
+	addDeleteTaskButton();
 }
 function showCompletedTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
-	removeDisplayedTasks();
+	removeAllDisplayedTasksFromList();
 	for (let key in tasksListObj) {
 		var taskContentLiteral = key;
 		var taskStatus = tasksListObj[key];
@@ -168,10 +173,42 @@ function showCompletedTasks() {
 		}
 	}
 	setListNumber();
+	addDeleteTaskButton();
 }
-function removeDisplayedTasks() {
+function removeAllDisplayedTasksFromList() {
 	var listToBeOperated = _$("list-of-todo")[0];
 	while (listToBeOperated.firstChild) {
 		listToBeOperated.removeChild(listToBeOperated.firstChild);
 	}
+}
+function addDeleteTaskButton() {
+	var todoLines = _$("list-of-todo")[0].children;
+	Array.prototype.forEach.call(todoLines, eachListLine => {
+		var deleteIcon = document.createElement("i");
+		deleteIcon.setAttribute("class", "iconfont icon-guanbi");
+		deleteIcon.addEventListener("click", removeSingleDisplayedTaskFromList, false);
+		if ("task-content" === eachListLine.lastChild.className) {
+			eachListLine.appendChild(deleteIcon);
+		}
+	});
+}
+function removeSingleDisplayedTaskFromList(event) {
+	var currentTaskLine = event.target.parentNode;
+	console.log(currentTaskLine);
+	var taskContentLiteral = _$("task-content",currentTaskLine)[0].innerHTML;
+	var currentTaskList = currentTaskLine.parentNode;
+	removeSingleTaskFromStorage(taskContentLiteral);
+	currentTaskList.removeChild(currentTaskLine);
+	
+}
+function removeSingleTaskFromStorage(taskToBeDeleted) {
+	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
+	console.log("before deletion is:");
+	console.log(tasksListObj);
+	delete tasksListObj[taskToBeDeleted];
+	console.log("after deletion is:")
+	console.log(tasksListObj);
+	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
+	console.log("store it in and take it out again looks like:")
+	console.log(tasksListObj);
 }
