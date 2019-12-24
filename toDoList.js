@@ -8,8 +8,8 @@ function _$(className, parentNode) {
 	}
 }
 
-_$("complete-btn")[0].setAttribute("isAllowedToDisplay", true);
 _$("todolist-footer")[0].addEventListener("click", setIsAllowedToDisplay, false);
+_$("complete-btn")[0].setAttribute("isAllowedToDisplay", true);
 function setIsAllowedToDisplay() {
 	switch (event.target) {
 		case _$("complete-btn")[0]:
@@ -25,6 +25,7 @@ function setIsAllowedToDisplay() {
 			break;
 	}
 }
+
 function checkIsAllowedToDisplay() {
 	var isAllowedToDisplay = _$("complete-btn")[0].getAttribute("isAllowedToDisplay");
 	if (!isAllowedToDisplay) {
@@ -33,6 +34,7 @@ function checkIsAllowedToDisplay() {
 		return true;
 	}
 }
+
 function addNewTask() {
 	var addBtn = _$("add-btn")[0];
 	var newTaskInputBox = _$("new-task")[0];
@@ -57,11 +59,13 @@ function checkIsEmpty(inputBox) {
 		return false;
 	}
 }
+
 function putNewTaskIntoStorage() {
 	var newTaskInputBox = _$("new-task")[0];
 	tasksListObj[newTaskInputBox.value] = "notDone";
 	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
 }
+
 function displayNewTask() {
 	var newTaskInputBox = _$("new-task")[0];
 	var listOfTodo = _$("list-of-todo")[0];
@@ -70,6 +74,7 @@ function displayNewTask() {
    <span class="task-content">${newTaskInputBox.value.trim()}</span>`;
 	listOfTodo.appendChild(targetListLine);
 }
+
 function setListNumber() {
 	var todoLines = _$("list-of-todo")[0].children;
 	Array.prototype.forEach.call(todoLines, (eachListLine, index) => {
@@ -81,6 +86,7 @@ function setListNumber() {
 		}
 	});
 }
+
 function clearInputBox() {
 	_$("new-task")[0].value = "";
 }
@@ -101,14 +107,17 @@ function finishTask(event) {
 		toggleTaskStorageStatus(taskContent);
 	}
 }
+
 function changeStylesToFinished(taskLine) {
 	taskLine.style.color = "gray";
 	taskLine.style.textDecoration = "line-through";
 }
+
 function changeStylesToUnfinished(taskLine) {
 	taskLine.style.color = "black";
 	taskLine.style.textDecoration = "none";
 }
+
 function toggleTaskStorageStatus(taskContentLiteral) {
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
 	var taskStatus = tasksListObj[taskContentLiteral];
@@ -139,6 +148,7 @@ function showAllTasks() {
 	setListNumber();
 	addDeleteTaskButton();
 }
+
 function showActiveTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
@@ -156,6 +166,7 @@ function showActiveTasks() {
 	setListNumber();
 	addDeleteTaskButton();
 }
+
 function showCompletedTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
@@ -175,12 +186,14 @@ function showCompletedTasks() {
 	setListNumber();
 	addDeleteTaskButton();
 }
+
 function removeAllDisplayedTasksFromList() {
 	var listToBeOperated = _$("list-of-todo")[0];
 	while (listToBeOperated.firstChild) {
 		listToBeOperated.removeChild(listToBeOperated.firstChild);
 	}
 }
+
 function addDeleteTaskButton() {
 	var todoLines = _$("list-of-todo")[0].children;
 	Array.prototype.forEach.call(todoLines, eachListLine => {
@@ -192,22 +205,17 @@ function addDeleteTaskButton() {
 		}
 	});
 }
+
 function removeSingleDisplayedTaskFromList(event) {
 	var currentTaskLine = event.target.parentNode;
-	console.log(currentTaskLine);
 	var taskContentLiteral = _$("task-content", currentTaskLine)[0].innerHTML;
 	var currentTaskList = currentTaskLine.parentNode;
 	removeSingleTaskFromStorage(taskContentLiteral);
 	currentTaskList.removeChild(currentTaskLine);
 }
+
 function removeSingleTaskFromStorage(taskToBeDeleted) {
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
-	console.log("before deletion is:");
-	console.log(tasksListObj);
 	delete tasksListObj[taskToBeDeleted];
-	console.log("after deletion is:");
-	console.log(tasksListObj);
 	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
-	console.log("store it in and take it out again looks like:");
-	console.log(tasksListObj);
 }
