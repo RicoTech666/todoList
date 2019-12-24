@@ -1,3 +1,5 @@
+var tasksListObj = new Object();
+
 function _$(className, parentNode) {
 	if (parentNode) {
 		return parentNode.getElementsByClassName(className);
@@ -6,24 +8,31 @@ function _$(className, parentNode) {
 	}
 }
 
-var tasksListObj = new Object();
-
-var isAllowedToDisplay = true;
-_$("todolist-footer")[0].addEventListener("click", checkIsAllowedToDisplay, false);
-function checkIsAllowedToDisplay() {
+_$("complete-btn")[0].setAttribute("isAllowedToDisplay", true);
+_$("todolist-footer")[0].addEventListener("click", setIsAllowedToDisplay, false);
+function setIsAllowedToDisplay() {
 	switch (event.target) {
 		case _$("complete-btn")[0]:
-			isAllowedToDisplay = false;
+			_$("complete-btn")[0].setAttribute("isAllowedToDisplay", false);
 			break;
 		case _$("add-btn")[0]:
-			isAllowedToDisplay = true;
+			_$("complete-btn")[0].setAttribute("isAllowedToDisplay", true);
 			break;
 		case _$("active-btn")[0]:
-			isAllowedToDisplay = true;
+			_$("complete-btn")[0].setAttribute("isAllowedToDisplay", true);
+			break;
+		default:
 			break;
 	}
 }
-
+function checkIsAllowedToDisplay() {
+	var isAllowedToDisplay = _$("complete-btn")[0].getAttribute("isAllowedToDisplay");
+	if (!isAllowedToDisplay) {
+		return false;
+	} else {
+		return true;
+	}
+}
 function addNewTask() {
 	var addBtn = _$("add-btn")[0];
 	var newTaskInputBox = _$("new-task")[0];
@@ -31,7 +40,7 @@ function addNewTask() {
 	if (13 === event.keyCode || event.target === addBtn) {
 		if (!isEmpty) {
 			putNewTaskIntoStorage();
-			if (isAllowedToDisplay) {
+			if (checkIsAllowedToDisplay()) {
 				displayNewTask();
 			}
 			setListNumber();
@@ -160,7 +169,6 @@ function showCompletedTasks() {
 	}
 	setListNumber();
 }
-
 function removeDisplayedTasks() {
 	var listToBeOperated = _$("list-of-todo")[0];
 	while (listToBeOperated.firstChild) {
