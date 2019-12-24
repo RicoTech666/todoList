@@ -14,8 +14,8 @@
     <div class="todolist-header">
       <h2>To Do List</h2>
       <p>Simple Todo List with adding abd filter by diff status.</p>
-      <input name="new-task" type="text" class="new-task">
-      <button name="add-btn" class="header-btn add-btn"">Add</button>
+      <input name="new-task" type="text" class="new-task" onkeydown="addNewTask()">
+      <button name="add-btn" class="header-btn add-btn" onclick="addNewTask()">Add</button>
     </div>
     <div class="todolist-body">
       <ul class="list-of-todo">
