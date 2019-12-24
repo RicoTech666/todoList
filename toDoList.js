@@ -98,9 +98,8 @@ function finishTask(event) {
 		} else if (!isFinished) {
 			changeStylesToUnfinished(currentTaskLine);
 		}
+		toggleTaskStorageStatus(taskContent);
 	}
-
-	toggleTaskStorageStatus(taskContent);
 }
 function changeStylesToFinished(taskLine) {
 	taskLine.style.color = "gray";
@@ -168,7 +167,7 @@ function showCompletedTasks() {
 		if ("Done" === taskStatus) {
 			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
 			<span class="task-content">${taskContentLiteral}</span>`;
-			_$("task-status-box",targetListLine)[0].setAttribute("checked",true);
+			_$("task-status-box", targetListLine)[0].setAttribute("checked", true);
 			changeStylesToFinished(targetListLine);
 			listOfTodo.appendChild(targetListLine);
 		}
@@ -196,20 +195,19 @@ function addDeleteTaskButton() {
 function removeSingleDisplayedTaskFromList(event) {
 	var currentTaskLine = event.target.parentNode;
 	console.log(currentTaskLine);
-	var taskContentLiteral = _$("task-content",currentTaskLine)[0].innerHTML;
+	var taskContentLiteral = _$("task-content", currentTaskLine)[0].innerHTML;
 	var currentTaskList = currentTaskLine.parentNode;
 	removeSingleTaskFromStorage(taskContentLiteral);
 	currentTaskList.removeChild(currentTaskLine);
-	
 }
 function removeSingleTaskFromStorage(taskToBeDeleted) {
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
 	console.log("before deletion is:");
 	console.log(tasksListObj);
 	delete tasksListObj[taskToBeDeleted];
-	console.log("after deletion is:")
+	console.log("after deletion is:");
 	console.log(tasksListObj);
 	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
-	console.log("store it in and take it out again looks like:")
+	console.log("store it in and take it out again looks like:");
 	console.log(tasksListObj);
 }
