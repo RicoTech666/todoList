@@ -167,7 +167,8 @@ function showCompletedTasks() {
 		var targetListLine = document.createElement("li");
 		if ("Done" === taskStatus) {
 			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
-      <span class="task-content">${taskContentLiteral}</span>`;
+			<span class="task-content">${taskContentLiteral}</span>`;
+			_$("task-status-box",targetListLine)[0].setAttribute("checked",true);
 			changeStylesToFinished(targetListLine);
 			listOfTodo.appendChild(targetListLine);
 		}
