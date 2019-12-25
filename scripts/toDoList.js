@@ -110,11 +110,13 @@ function finishTask(event) {
 
 function changeStylesToFinished(taskLine) {
 	taskLine.style.color = "gray";
+	taskLine.firstChild.style.textDecoration = "line-through";
 	taskLine.style.textDecoration = "line-through";
 }
 
 function changeStylesToUnfinished(taskLine) {
 	taskLine.style.color = "black";
+	taskLine.firstChild.style.textDecoration = "none";
 	taskLine.style.textDecoration = "none";
 }
 

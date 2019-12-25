@@ -13,7 +13,6 @@ body {
 .todolist-header p {
 	font-style: italic;
 }
-
 .new-task {
 	width: 72%;
 	height: 20px;
@@ -35,7 +34,6 @@ body {
 .add-btn:focus {
 	outline: none;
 }
-
 .todolist-footer {
 	display: flex;
 	justify-content: space-between;
@@ -81,5 +79,5 @@ body {
 .task-number {
 	display: inline-block;
 	height: 28px;
-	background: white;
+	background-color: white;
 }
