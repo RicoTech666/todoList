@@ -62,6 +62,7 @@ body {
 .list-of-todo li {
 	width: 95%;
 	line-height: 28px;
+	word-wrap: break-word;
 	overflow-wrap: break-word;
 }
 .list-of-todo li:nth-child(even) {

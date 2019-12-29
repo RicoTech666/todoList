@@ -1,5 +1,6 @@
 var tasksListObj = new Object();
-
+const statusCodeDone = "Done";
+const statusCodeNotDone = "notDone";
 function _$(className, parentNode) {
 	if (parentNode) {
 		return parentNode.getElementsByClassName(className);
@@ -53,16 +54,12 @@ function addNewTask() {
 }
 
 function checkIsEmpty(inputBox) {
-	if ("" === inputBox.value) {
-		return true;
-	} else {
-		return false;
-	}
+	return "" === inputBox.value;
 }
 
 function putNewTaskIntoStorage() {
 	var newTaskInputBox = _$("new-task")[0];
-	tasksListObj[newTaskInputBox.value] = "notDone";
+	tasksListObj[newTaskInputBox.value] = statusCodeNotDone;
 	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
 }
 
@@ -123,9 +120,9 @@ function changeStylesToUnfinished(taskLine) {
 function toggleTaskStorageStatus(taskContentLiteral) {
 	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
 	var taskStatus = tasksListObj[taskContentLiteral];
-	"notDone" === taskStatus
-		? (tasksListObj[taskContentLiteral] = "Done")
-		: (tasksListObj[taskContentLiteral] = "notDone");
+	statusCodeNotDone === taskStatus
+		? (tasksListObj[taskContentLiteral] = statusCodeDone)
+		: (tasksListObj[taskContentLiteral] = statusCodeNotDone);
 	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
 }
 
@@ -139,7 +136,7 @@ function showAllTasks() {
 		var targetListLine = document.createElement("li");
 		targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
     <span class="task-content">${taskContentLiteral}</span>`;
-		if ("Done" === taskStatus) {
+		if (statusCodeDone === taskStatus) {
 			targetListLine.firstChild.checked = true;
 			changeStylesToFinished(targetListLine);
 		} else {
@@ -159,7 +156,7 @@ function showActiveTasks() {
 		var taskContentLiteral = key;
 		var taskStatus = tasksListObj[key];
 		var targetListLine = document.createElement("li");
-		if ("notDone" === taskStatus) {
+		if (statusCodeNotDone === taskStatus) {
 			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
       <span class="task-content">${taskContentLiteral}</span>`;
 			listOfTodo.appendChild(targetListLine);
@@ -177,7 +174,7 @@ function showCompletedTasks() {
 		var taskContentLiteral = key;
 		var taskStatus = tasksListObj[key];
 		var targetListLine = document.createElement("li");
-		if ("Done" === taskStatus) {
+		if (statusCodeDone === taskStatus) {
 			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
 			<span class="task-content">${taskContentLiteral}</span>`;
 			_$("task-status-box", targetListLine)[0].setAttribute("checked", true);
@@ -216,8 +213,6 @@ function removeSingleDisplayedTaskFromList(event) {
 		var currentTaskList = currentTaskLine.parentNode;
 		removeSingleTaskFromStorage(taskContentLiteral);
 		currentTaskList.removeChild(currentTaskLine);
-	} else {
-		return;
 	}
 }
 
