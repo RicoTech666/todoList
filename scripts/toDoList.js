@@ -1,6 +1,7 @@
-var tasksListObj = new Object();
-const statusCodeDone = "Done";
-const statusCodeNotDone = "notDone";
+var tasksListArr = new Object();
+var taskId = 1;
+var tasksListArr = [];
+
 function _$(className, parentNode) {
 	if (parentNode) {
 		return parentNode.getElementsByClassName(className);
@@ -59,8 +60,19 @@ function checkIsEmpty(inputBox) {
 
 function putNewTaskIntoStorage() {
 	var newTaskInputBox = _$("new-task")[0];
-	tasksListObj[newTaskInputBox.value] = statusCodeNotDone;
-	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
+	var isDone = false;
+	var isDeleted = false;
+	var taskObj = new TaskObj(taskId, newTaskInputBox.value, isDone, isDeleted);
+	tasksListArr.push(taskObj);
+	localStorage.setItem("tasksListArr", JSON.stringify(tasksListArr));
+	taskId++;
+}
+
+function TaskObj(id, content, isDone, isDeleted) {
+	this.id = id;
+	this.content = content;
+	this.isDone = isDone;
+	this.isDeleted = isDeleted;
 }
 
 function displayNewTask() {
@@ -79,6 +91,9 @@ function setListNumber() {
 		listNumber.setAttribute("class", "task-number");
 		listNumber.innerHTML = `${index + 1}.`;
 		if ("task-status-box" === eachListLine.firstChild.className) {
+			if (eachListLine.firstChild.checked) {
+				listNumber.style.textDecoration = "line-through";
+			}
 			eachListLine.prepend(listNumber);
 		}
 	});
@@ -118,31 +133,35 @@ function changeStylesToUnfinished(taskLine) {
 }
 
 function toggleTaskStorageStatus(taskContentLiteral) {
-	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
-	var taskStatus = tasksListObj[taskContentLiteral];
-	statusCodeNotDone === taskStatus
-		? (tasksListObj[taskContentLiteral] = statusCodeDone)
-		: (tasksListObj[taskContentLiteral] = statusCodeNotDone);
-	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
+	tasksListArr = JSON.parse(localStorage.getItem("tasksListArr"));
+	for (let i = 0; i < tasksListArr.length; i++) {
+		if (tasksListArr[i].content === taskContentLiteral) {
+			tasksListArr[i].isDone = tasksListArr[i].isDone ? false : true;
+		}
+	}
+	localStorage.setItem("tasksListArr", JSON.stringify(tasksListArr));
 }
 
 function showAllTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
-	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
+	tasksListArr = JSON.parse(localStorage.getItem("tasksListArr"));
 	removeAllDisplayedTasksFromList();
-	for (let key in tasksListObj) {
-		var taskContentLiteral = key;
-		var taskStatus = tasksListObj[key];
+	for (let key in tasksListArr) {
+		var taskContentLiteral = tasksListArr[key].content;
+		var isDone = tasksListArr[key].isDone;
+		var isDeleted = tasksListArr[key].isDeleted;
 		var targetListLine = document.createElement("li");
 		targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
-    <span class="task-content">${taskContentLiteral}</span>`;
-		if (statusCodeDone === taskStatus) {
-			targetListLine.firstChild.checked = true;
-			changeStylesToFinished(targetListLine);
-		} else {
-			changeStylesToUnfinished(targetListLine);
+		<span class="task-content">${taskContentLiteral}</span>`;
+		if (!isDeleted) {
+			if (isDone) {
+				_$("task-status-box", targetListLine)[0].setAttribute("checked", true);
+				changeStylesToFinished(targetListLine);
+			} else {
+				changeStylesToUnfinished(targetListLine);
+			}
+			listOfTodo.appendChild(targetListLine);
 		}
-		listOfTodo.appendChild(targetListLine);
 	}
 	setListNumber();
 	addDeleteTaskButton();
@@ -150,16 +169,19 @@ function showAllTasks() {
 
 function showActiveTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
-	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
+	tasksListArr = JSON.parse(localStorage.getItem("tasksListArr"));
 	removeAllDisplayedTasksFromList();
-	for (let key in tasksListObj) {
-		var taskContentLiteral = key;
-		var taskStatus = tasksListObj[key];
+	for (let key in tasksListArr) {
+		var taskContentLiteral = tasksListArr[key].content;
+		var isDone = tasksListArr[key].isDone;
+		var isDeleted = tasksListArr[key].isDeleted;
 		var targetListLine = document.createElement("li");
-		if (statusCodeNotDone === taskStatus) {
-			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
+		if (!isDeleted) {
+			if (!isDone) {
+				targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
       <span class="task-content">${taskContentLiteral}</span>`;
-			listOfTodo.appendChild(targetListLine);
+				listOfTodo.appendChild(targetListLine);
+			}
 		}
 	}
 	setListNumber();
@@ -168,18 +190,21 @@ function showActiveTasks() {
 
 function showCompletedTasks() {
 	var listOfTodo = _$("list-of-todo")[0];
-	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
+	tasksListArr = JSON.parse(localStorage.getItem("tasksListArr"));
 	removeAllDisplayedTasksFromList();
-	for (let key in tasksListObj) {
-		var taskContentLiteral = key;
-		var taskStatus = tasksListObj[key];
+	for (let key in tasksListArr) {
+		var taskContentLiteral = tasksListArr[key].content;
+		var isDone = tasksListArr[key].isDone;
+		var isDeleted = tasksListArr[key].isDeleted;
 		var targetListLine = document.createElement("li");
-		if (statusCodeDone === taskStatus) {
-			targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
+		if (!isDeleted) {
+			if (isDone) {
+				targetListLine.innerHTML = `<input type="checkbox" class="task-status-box">
 			<span class="task-content">${taskContentLiteral}</span>`;
-			_$("task-status-box", targetListLine)[0].setAttribute("checked", true);
-			changeStylesToFinished(targetListLine);
-			listOfTodo.appendChild(targetListLine);
+				_$("task-status-box", targetListLine)[0].setAttribute("checked", true);
+				changeStylesToFinished(targetListLine);
+				listOfTodo.appendChild(targetListLine);
+			}
 		}
 	}
 	setListNumber();
@@ -217,7 +242,11 @@ function removeSingleDisplayedTaskFromList(event) {
 }
 
 function removeSingleTaskFromStorage(taskToBeDeleted) {
-	tasksListObj = JSON.parse(localStorage.getItem("tasksListObj"));
-	delete tasksListObj[taskToBeDeleted];
-	localStorage.setItem("tasksListObj", JSON.stringify(tasksListObj));
+	tasksListArr = JSON.parse(localStorage.getItem("tasksListArr"));
+	for (const key in tasksListArr) {
+		if (tasksListArr[key].content === taskToBeDeleted) {
+			tasksListArr[key].isDeleted = true;
+		}
+	}
+	localStorage.setItem("tasksListArr", JSON.stringify(tasksListArr));
 }
